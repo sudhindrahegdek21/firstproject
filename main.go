@@ -1,9 +1,13 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 var digitsum int
 
+//adding digits in integer first method
 func addDigits(number int) int {
 	digitsum = 0
 	if number == 0 {
@@ -13,17 +17,79 @@ func addDigits(number int) int {
 	return digitsum
 }
 
+//getting sum of Digits in a integer string
+func AddDigitsString(str string) int {
+	sum, i := 0, 0
+	// Traversing through the string
+	for i < len(str) {
+		// Since ascii value of
+		// numbers starts from 48
+		// so we subtract it from sum
+		sum = sum + int(str[i]) - 48
+		i++
+	}
+	return sum
+}
+
+// To check String a valid integer
+func IsDigitsOnly(s string) bool {
+	if s[0] == '0' {
+		return false
+	}
+	for _, c := range s {
+		if c < '0' || c > '9' {
+			return false
+		}
+	}
+	return true
+}
+
 func main() {
+	//first method...
 	number := 0
-	fmt.Println("helllo")
+
 	fmt.Println("Enter Your number")
-	fmt.Scanln(&number)
-	fmt.Println(number)
+START:
+	_, err := fmt.Scanln(&number)
+	if err != nil {
+		goto START
+	}
+
 	sum := addDigits(number)
 	fmt.Println(sum)
 	for sum > 9 {
 		sum = addDigits(sum)
 		fmt.Println(sum)
 	}
-
+	//second method...
+	fmt.Println("string method...")
+	digitnum := ""
+	fmt.Println("integer as string")
+AGAIN:
+	fmt.Scanln(&digitnum)
+	if _, err := strconv.ParseInt(digitnum, 10, 64); err == nil {
+		fmt.Printf("%q looks like a number.\n", digitnum)
+		sum = AddDigitsString(digitnum)
+		fmt.Println(sum)
+		for sum > 9 {
+			sum = addDigits(sum)
+			fmt.Println(sum)
+		}
+	} else {
+		goto AGAIN
+	}
+	//third method
+	snumber := ""
+REPEAT:
+	fmt.Println("Enter a valid number..")
+	fmt.Scanln(&snumber)
+	if !IsDigitsOnly(snumber) {
+		goto REPEAT
+	}
+	sum = AddDigitsString(snumber)
+	fmt.Println(sum)
+	for sum > 9 {
+		sum = addDigits(sum)
+		fmt.Println(sum)
+	}
 }
