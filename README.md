@@ -4,7 +4,7 @@ Task 1
 INPUT: number in string format
 step 1: Is number valid if: yes continue; else go to INPUT
 step 2: to add a digits in go
-step 3: check if sum > 9 if: yes go to step 1 else: step 3
+step 3: check if sum > 9 if: yes go to step 2 else: step 3
 step 4: end program
 
 Task 2
