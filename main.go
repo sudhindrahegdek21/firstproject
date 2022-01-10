@@ -44,6 +44,13 @@ func IsDigitsOnly(s string) bool {
 	return true
 }
 
+func SliceDisplay(str string) {
+	fmt.Println("string Display...")
+	for _, s := range str {
+		fmt.Printf("%c, ", s)
+	}
+}
+
 func main() {
 	//first method...
 	number := 0
@@ -92,4 +99,14 @@ REPEAT:
 		sum = addDigits(sum)
 		fmt.Println(sum)
 	}
+	// Display in slices
+	snumber = ""
+CYCLE:
+	fmt.Println("Enter a valid number..")
+	fmt.Scanln(&snumber)
+	if !IsDigitsOnly(snumber) {
+		goto CYCLE
+	}
+	SliceDisplay(snumber)
+
 }
