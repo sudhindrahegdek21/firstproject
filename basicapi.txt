@@ -1,0 +1,64 @@
+1 . In route.go set the routing path and grouping for each routing path there will be corresponding handler in middle ware
+
+   routing
+    
+     	v1 := api.Group("/v1")
+	hello := v1.Group("/hello")
+	hello.Get("/msg", timeout.New(basicHandler.GetMsg, 30*time.Second))
+	hello.Get("/msg/:name", timeout.New(basicHandler.GetMsgName, 30*time.Second))
+	hello.Post("/addmsg", timeout.New(basicHandler.AddMsg, 30*time.Second))
+
+2. middleware handlers
+
+       package basic
+
+import (
+	basicService "go-backend-application/services/basic"
+
+	"github.com/gofiber/fiber/v2"
+)
+
+func GetMsg(c *fiber.Ctx) error {
+	return basicService.GetMsg(c)
+}
+
+func GetMsgName(c *fiber.Ctx) error {
+	return basicService.GetMsgName(c)
+}
+
+func AddMsg(c *fiber.Ctx) error {
+	return basicService.AddMsg(c)
+}
+
+3. Service file
+
+     package basic
+
+import (
+	"fmt"
+
+	"strings"
+
+	"github.com/Jeffail/gabs/v2"
+	"github.com/gofiber/fiber/v2"
+)
+
+func GetMsg(c *fiber.Ctx) error {
+	c.JSON(&fiber.Map{"data": "hello freshers"})
+	return nil
+}
+
+func GetMsgName(c *fiber.Ctx) error {
+	str := fmt.Sprintf("%s", c.Params("name"))
+	str = strings.Join(strings.Split(str, "+"), " ")
+	return c.SendString(str)
+}
+
+func AddMsg(c *fiber.Ctx) error {
+	apiBody, _ := gabs.ParseJSON([]byte(c.Body()))
+	return c.JSON(apiBody)
+}
+
+ 
+       
+
