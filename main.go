@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"strconv"
+	"time"
 )
 
 var digitsum int
@@ -52,6 +53,8 @@ func SliceDisplay(str string) {
 }
 
 func main() {
+
+	fmt.Println()
 	//first method...
 	number := 0
 
@@ -63,6 +66,8 @@ START:
 	}
 
 	sum := addDigits(number)
+	start := time.Now()
+	fmt.Println(time.Since(start))
 	fmt.Println(sum)
 	for sum > 9 {
 		sum = addDigits(sum)
@@ -94,6 +99,8 @@ REPEAT:
 		goto REPEAT
 	}
 	sum = AddDigitsString(snumber)
+	start = time.Now()
+	fmt.Println(time.Since(start))
 	fmt.Println(sum)
 	for sum > 9 {
 		sum = addDigits(sum)
@@ -102,7 +109,7 @@ REPEAT:
 	// Display in slices
 	snumber = ""
 CYCLE:
-	fmt.Println("Enter a valid number..")
+	fmt.Println("Enter a valid number to Display..")
 	fmt.Scanln(&snumber)
 	if !IsDigitsOnly(snumber) {
 		goto CYCLE
